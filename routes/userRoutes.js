@@ -8,8 +8,6 @@ const userController = require('../controllers/user')
 
 router.post('/', userController.createUser)
 
-router.get('/', (req, res) => {
-  res.send('users routs')
-})
+router.get('/:id', userController.getUser)
 
 module.exports = router
