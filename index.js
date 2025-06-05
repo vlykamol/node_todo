@@ -4,6 +4,7 @@ dotenv.config()
 
 // routes
 const userRoutes = require('./routes/userRoutes')
+const authRoutes = require('./routes/authRoutes')
 
 port = process.env.PORT | 8080
 const app = express()
@@ -11,6 +12,7 @@ const app = express()
 app.use(express.json())
 
 app.use('/user', userRoutes)
+app.use('/auth', authRoutes)
 
 app.get('/', (req, res) => {
   res.send("hello world!")

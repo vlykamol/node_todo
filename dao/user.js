@@ -17,9 +17,14 @@ const getAllUsers = () => {
   return db('users').select()
 }
 
+const getUserByEmail = (email) => {
+  return db('users').where({email}).first()
+}
+
 module.exports = {
   createUser,
   getUserById,
   getAllUsers,
-  deleteUserById
+  deleteUserById,
+  getUserByEmail
 }

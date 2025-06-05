@@ -2,7 +2,7 @@ const userDAO = require('../dao/user')
 
 
 const createUser = async (req, res) => {
-  const data = req.body
+  const data = {...req.body}
   try{
     const [user] = await userDAO.createUser(data);
     return res.status(201).json({user, message : 'user created successfully'})
@@ -26,10 +26,12 @@ const createUser = async (req, res) => {
 const getUser = async (req, res) => {
   const {id} = req.params;
 
+  if(isNaN(id)) return res.status(400).json({error: 'Invalid user id', message: 'please provide valid user id'})
+
   try {
     const user = await userDAO.getUserById(id);
-    if(!user) return res.status(404).json({error: 'user not found!', message: `No user exist with id ${id}`})
-    return res.status(200).json({user, message: "successful retrive!"})
+    if(!user) return res.status(404).json({error: 'user not found', message: `No user exist with id ${id}`})
+    return res.status(200).json({user, message: "successful retrive"})
   } catch (err) {
     return res.status(500).json({error: 'failed to fetch user', message: err.message})
   }
@@ -46,7 +48,21 @@ const getUser = async (req, res) => {
   // })
 }
 
+
+const getAllUsers = async (req, res) => {
+
+  try {
+    const users = await userDAO.getAllUsers();
+    if(!users || users.length === 0) return res.status(404).json({error: 'No Users found!', message: `user table is empty`})
+    return res.status(200).json({users, message: "successful retrive"})
+  } catch (err) {
+    return res.status(500).json({error: 'failed to fetch users', message: err.message})
+  }
+}
+
+
 module.exports = {
   createUser,
-  getUser
+  getUser,
+  getAllUsers
 }
