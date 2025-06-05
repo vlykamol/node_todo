@@ -4,6 +4,6 @@ dotenv.config()
 
 const environment = process.env.NODE_ENV
 
-const knexfile = require('/knexfile')
+const knexfile = require('./knexfile')
 
 module.exports = knex(knexfile[environment])
