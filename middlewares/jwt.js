@@ -14,7 +14,6 @@ module.exports = {
     } catch(err) {
       return res.status(500).json({error: 'Authorization failed', message: 'user don\'t have access'})
     }
-
     next()
   }
 }

@@ -18,7 +18,6 @@ const signup = async (req, res) => {
   const data = {...req.body}
   try{
     const encryptedPassword = await hashPassword(data.password)
-    console.log('encrypted password', encryptedPassword);
     data.password = encryptedPassword;
     const [user] = await userDAO.createUser(data);
     return res.status(201).json({user, message : 'user created successfully'})
@@ -40,7 +39,7 @@ const login = async (req, res) => {
 
     const accessToken = jwt.sign({user: user.email}, process.env.ACCESS_TOKEN_SECRET);
 
-    return res.status(200).json({accessToken, message: 'user login successful'})
+    return res.status(200).json({accessToken, user: {id : user.id, first_name: user.first_name, email: user.email}, message: 'user login successful'})
     
   } catch(err) {
     return res.status(500).json({error: 'failed to fetch user', message: err.message})

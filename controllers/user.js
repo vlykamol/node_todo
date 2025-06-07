@@ -3,6 +3,8 @@ const userDAO = require('../dao/user')
 
 const createUser = async (req, res) => {
   const data = {...req.body}
+  console.log(req.body);
+  
   try{
     const [user] = await userDAO.createUser(data);
     return res.status(201).json({user, message : 'user created successfully'})

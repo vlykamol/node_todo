@@ -9,7 +9,7 @@ const { jwtAuth } = require('../middlewares/jwt')
 
 router.post('/', userController.createUser)
 
-router.get('/all', userController.getAllUsers)
+router.get('/all', jwtAuth, userController.getAllUsers)
 router.get('/:id', jwtAuth, userController.getUser)
 
 
